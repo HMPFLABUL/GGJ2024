@@ -31,7 +31,10 @@ public class MovementBoop : MonoBehaviour
     private void Update()
     {
         if (GameStateMachine.Instance.state != GameStateMachine.GameState.Gameplay)
+        {
+            StopBoop();
             return;
+        }
         bool check = Input.GetAxis("Horizontal") !=0 || Input.GetAxis("Vertical") !=0;
         if (!started && check)
         {

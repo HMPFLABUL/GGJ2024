@@ -28,4 +28,8 @@ public class Dialogue : ENTITY
     {
         currentDialogue++;
     }
+    public void SetDialogue(int i)
+    {
+        currentDialogue = i;
+    }
 }

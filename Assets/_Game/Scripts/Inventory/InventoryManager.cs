@@ -31,7 +31,7 @@ public class InventoryManager : MonoBehaviourSingleton<InventoryManager>
         Slots[Items.Count - 1].button.onClick.AddListener(() => RemoveItem(Items[Items.Count - 1]));
         Slots[Items.Count - 1].button.onClick.AddListener(() => CloseInventory());
     }
-    void RemoveItem(InventoryItem item)
+    public void RemoveItem(InventoryItem item)
     {
         item.OnUse();
         Items.RemoveAt(Items.IndexOf(item));

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InventoryItem : ITEM
 {
@@ -10,6 +11,7 @@ public class InventoryItem : ITEM
     public bool interactable;
     [SerializeField] NPCConversation pickDialogue;
     [SerializeField] NPCConversation jokeDialogue;
+    [SerializeField] UnityEvent OnPickup;
     public void OnUse()
     {
         
@@ -24,12 +26,17 @@ public class InventoryItem : ITEM
         }
     }
 
-    private void PickUp()
+    public void PickUp()
     {
+        OnPickup?.Invoke();
         InventoryManager.Instance.AddItem(this);
         gameObject.SetActive(false);
         if(pickDialogue!=null)
             ConversationManager.Instance.StartConversation(pickDialogue);
         ChangeStateToDialogue();
+    }
+    public void RemoveFromInventory()
+    {
+        InventoryManager.Instance.RemoveItem(this);
     }
 }
