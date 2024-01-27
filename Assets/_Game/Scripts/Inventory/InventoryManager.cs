@@ -9,8 +9,6 @@ public class InventoryManager : MonoBehaviourSingleton<InventoryManager>
     [SerializeField] List<InventoryItemSlot> Slots;
     List<InventoryItem> Items;
 
-    [SerializeField] InventoryItem testItem;
-
     private void Start()
     {
         if(Items==null)
@@ -21,17 +19,15 @@ public class InventoryManager : MonoBehaviourSingleton<InventoryManager>
     {
         if (Input.GetKeyDown(KeyCode.I))
             OpenInventory();
-        if (Input.GetKeyDown(KeyCode.Z))
-            AddItem(testItem);
     }
-    void AddItem(InventoryItem item)
+    public void AddItem(InventoryItem item)
     {
         Items.Add(item);
         Slots[Items.Count - 1].button.interactable = Items[Items.Count - 1].interactable;
         Slots[Items.Count - 1].button.onClick.RemoveAllListeners();
+        Slots[Items.Count - 1].SetSprite(Items[Items.Count - 1].inventorySprite);
         if (!Items[Items.Count - 1].interactable)
             return;
-        Slots[Items.Count-1].itemSprite = Items[Items.Count - 1].inventorySprite;
         Slots[Items.Count - 1].button.onClick.AddListener(() => RemoveItem(Items[Items.Count - 1]));
         Slots[Items.Count - 1].button.onClick.AddListener(() => CloseInventory());
     }

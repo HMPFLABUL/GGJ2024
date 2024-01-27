@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class InventoryItemSlot : MonoBehaviour
 {
-    public Sprite itemSprite;
+    public Image itemImage;
     public Button button;
     private void Awake()
     {
         var i = GetComponentsInChildren<Image>();
-        itemSprite = i[1].sprite;
+        itemImage = i[1];
         button = GetComponent<Button>();
+    }
+     public void SetSprite(Sprite sprite)
+    {
+        itemImage.sprite = sprite;
     }
 }
