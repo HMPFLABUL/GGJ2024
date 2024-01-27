@@ -10,13 +10,15 @@ namespace Game.Dialogues
         [SerializeField] NPCConversation KingDialogue0;
         private void OnMouseDown()
         {
-            if (!CheckDistance())
+            if (!CheckDistanceToPlayer())
                 return;
             if (GameStateMachine.Instance.state == GameStateMachine.GameState.Gameplay)
             {
                 ConversationManager.Instance.StartConversation(KingDialogue0);
-                GameStateMachine.Instance.ChangeState(GameStateMachine.GameState.Dialogue);
+                ChangeStateToDialogue();
             }
         }
+
+       
     }
 }

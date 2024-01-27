@@ -30,6 +30,7 @@ public class GameStateMachine : MonoBehaviourSingleton<GameStateMachine>
 
     IEnumerator DialogueState()
     {
+        CursorManager.Instance.SetDefaultCursor();
         Debug.Log("Dialogue: Enter");
         while (state == GameState.Dialogue)
         {

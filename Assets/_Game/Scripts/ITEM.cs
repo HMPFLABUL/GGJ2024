@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ITEM : MonoBehaviour
+public class ITEM : ENTITY
 {
-    private void OnMouseEnter()
+    bool changed = false;
+    private void OnMouseOver()
     {
-        if (CheckDistance())
+        if (!changed && CheckForGameplayState() && CheckDistanceToPlayer())
+        {
             CursorManager.Instance.SetInteractionCursor();
+            changed = true;
+        }
     }
 
-    protected bool CheckDistance()
-    {
-        if (Vector3.Distance(Player.Instance.transform.position, transform.position) < 3)
-            return true;
-        return false;
-    }
-
+   
     private void OnMouseExit()
     {
         CursorManager.Instance.SetDefaultCursor();
+        changed = false;
     }
 }

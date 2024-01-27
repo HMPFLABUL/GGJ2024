@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : ENTITY
 {
-    private void OnMouseEnter()
+    bool changed = false;
+    private void OnMouseOver()
     {
-        if(CheckDistance())
+        if (!changed && CheckForGameplayState() && CheckDistanceToPlayer())
+        {
             CursorManager.Instance.SetDialogueCursor();
-    }
-
-    protected bool CheckDistance()
-    {
-        if (Vector3.Distance(Player.Instance.transform.position, transform.position) < 3)
-            return true;
-        return false;
+            changed = true;
+        }
     }
 
     private void OnMouseExit()
     {
         CursorManager.Instance.SetDefaultCursor();
+        changed = false;
     }
 }
