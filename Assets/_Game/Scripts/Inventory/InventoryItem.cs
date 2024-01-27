@@ -9,10 +9,10 @@ public class InventoryItem : ITEM
 {
     public Sprite inventorySprite;
     public bool interactable;
-    [SerializeField] NPCConversation pickDialogue;
-    [SerializeField] NPCConversation jokeDialogue;
-    [SerializeField] UnityEvent OnPickup;
-    public void OnUse()
+    [SerializeField] protected NPCConversation pickDialogue;
+    [SerializeField] protected NPCConversation jokeDialogue;
+    [SerializeField] protected UnityEvent OnPickup;
+    public virtual void OnUse()
     {
         
     }
@@ -30,7 +30,7 @@ public class InventoryItem : ITEM
     {
         OnPickup?.Invoke();
         InventoryManager.Instance.AddItem(this);
-        gameObject.SetActive(false);
+        transform.localPosition = new Vector3(0,-1000f,0);
         if(pickDialogue!=null)
             ConversationManager.Instance.StartConversation(pickDialogue);
         ChangeStateToDialogue();

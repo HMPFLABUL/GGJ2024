@@ -28,12 +28,12 @@ public class InventoryManager : MonoBehaviourSingleton<InventoryManager>
         Slots[Items.Count - 1].SetSprite(Items[Items.Count - 1].inventorySprite);
         if (!Items[Items.Count - 1].interactable)
             return;
-        Slots[Items.Count - 1].button.onClick.AddListener(() => RemoveItem(Items[Items.Count - 1]));
+        //Slots[Items.Count - 1].button.onClick.AddListener(() => RemoveItem(Items[Items.Count - 1]));
         Slots[Items.Count - 1].button.onClick.AddListener(() => CloseInventory());
+        Slots[Items.Count - 1].button.onClick.AddListener(() => Items[Items.Count - 1].OnUse());
     }
     public void RemoveItem(InventoryItem item)
     {
-        item.OnUse();
         Items.RemoveAt(Items.IndexOf(item));
     }
     public void OpenInventory()
