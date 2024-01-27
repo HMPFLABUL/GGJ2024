@@ -2,9 +2,25 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
-public class GameStateMachine : MonoBehaviourSingleton<GameStateMachine>
+public class GameStateMachine : MonoBehaviour
 {
+    public static GameStateMachine Instance { get; private set; }
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        state = GameState.Gameplay;
+        //NextState();
+    }
     [SerializeField] public enum GameState
     {
         Gameplay,
@@ -12,10 +28,9 @@ public class GameStateMachine : MonoBehaviourSingleton<GameStateMachine>
         Inventory,
         Performance,
     }
-
+    
 
     public GameState state;
-    Coroutine currentCoroutine;
 
     IEnumerator GameplayState()
     {
@@ -59,20 +74,15 @@ public class GameStateMachine : MonoBehaviourSingleton<GameStateMachine>
         Debug.Log("Performance: Exit");
     }
 
-    void Start()
-    {
-        NextState();
-    }
 
-
-    void NextState()
+    public void NextState()
     {
         string methodName = state.ToString() + "State";
         System.Reflection.MethodInfo info =
             GetType().GetMethod(methodName,
                                 System.Reflection.BindingFlags.NonPublic |
                                 System.Reflection.BindingFlags.Instance);
-        currentCoroutine = StartCoroutine((IEnumerator)info.Invoke(this, null));
+        StartCoroutine((IEnumerator)info.Invoke(this, null));
     }
 
     public void ChangeState(GameState state)
@@ -95,5 +105,8 @@ public class GameStateMachine : MonoBehaviourSingleton<GameStateMachine>
     {
         state = GameState.Performance;
     }
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 }
