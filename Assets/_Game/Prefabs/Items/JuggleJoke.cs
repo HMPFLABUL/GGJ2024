@@ -8,12 +8,27 @@ public class JuggleJoke : InventoryItem
 {
     [SerializeField] PlayableDirector jugglingCutscene;
     [SerializeField] NPCConversation praise;
+    [SerializeField] NPCConversation notusablehere;
     [SerializeField] List<InventoryItem> apples;
-    [SerializeField] Camera main;
+    [SerializeField] Transform KING;
     override public void OnUse()
     {
-        StartCoroutine(OnUseE());
+        if (CheckDistanceToKing())
+        {
+            StartCoroutine(OnUseE());
+        }
+        else
+        {
+            ConversationManager.Instance.StartConversation(notusablehere);
+        }
     }
+    bool CheckDistanceToKing()
+    {
+        if (Vector3.Distance(KING.position, Player.Instance.transform.position) < 4)
+            return true;
+        return false;
+    }
+
     IEnumerator OnUseE()
     {
         GameStateMachine.Instance.ChangeState(GameStateMachine.GameState.Performance);

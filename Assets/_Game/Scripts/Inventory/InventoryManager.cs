@@ -36,13 +36,16 @@ public class InventoryManager : MonoBehaviourSingleton<InventoryManager>
     {
         Items.RemoveAt(Items.IndexOf(item));
     }
-    public void OpenInventory()
+    public void OpenInventory() 
     {
+        GameStateMachine.Instance.ChangeToInventory();
+        CursorManager.Instance.SetDefaultCursor();
         Inventory.gameObject.SetActive(true);
         SetupSlots();
     }
     void CloseInventory()
     {
+        GameStateMachine.Instance.ChangeToGameplay();
         for (int i = 0; i < Slots.Count; i++)
         {
             Slots[i].gameObject.SetActive(false);
