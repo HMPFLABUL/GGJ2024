@@ -11,10 +11,22 @@ public class KingMood : MonoBehaviour
     [SerializeField] float tickTime = 2f;
     float tickTimer = 0;
     List<Image> allImages;
+    [SerializeField] SceneLoad sceneLoader;
 
     bool off = false;
+    public static KingMood Instance { get; private set; }
     private void Awake()
     {
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
         allImages = new List<Image>(GetComponentsInChildren<Image>());
     }
     private void Update()
@@ -59,6 +71,18 @@ public class KingMood : MonoBehaviour
     private void Tick()
     {
         moodSlider.value -= 1;
+        fillImage.color = new Color(fillImage.color.r, moodSlider.value / 100f, fillImage.color.b);
+
+        if(moodSlider.value <= 0)
+        {
+            GameStateMachine.Instance.ChangeToPerformance();
+            sceneLoader.LoadEnd();
+        }
+    }
+
+    public void AddMood(int amount)
+    {
+        moodSlider.value += amount;
         fillImage.color = new Color(fillImage.color.r, moodSlider.value / 100f, fillImage.color.b);
     }
 }

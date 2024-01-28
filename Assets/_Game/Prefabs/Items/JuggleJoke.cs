@@ -19,6 +19,7 @@ public class JuggleJoke : InventoryItem
         }
         else
         {
+            GameStateMachine.Instance.ChangeToDialogue();
             ConversationManager.Instance.StartConversation(notusablehere);
         }
     }
@@ -36,6 +37,7 @@ public class JuggleJoke : InventoryItem
         jugglingCutscene.Play();
         yield return new WaitForSeconds(7f);
         ConversationManager.Instance.StartConversation(praise);
+        KingMood.Instance.AddMood(50);
         InventoryManager.Instance.RemoveItem(this);
 
     } 

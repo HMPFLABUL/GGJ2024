@@ -32,7 +32,7 @@ public class Intro : MonoBehaviour
             yield return null;
         HatAnim.Play();
         yield return new WaitForFixedUpdate();        
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         hat.localScale = Vector3.one;
         ConversationManager.Instance.StartConversation(part2);        
         while (!part2done)
